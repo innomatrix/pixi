@@ -2,83 +2,71 @@ export default class neon {
 
     constructor() {
 
-        this.initW = $('#neon').width();
-        this.initH = $('#neon').height();
-        console.log('sw: ' + this.initW + ' sh: ' + this.initH);
+        var initW = $('#' + target).width();
+        var initH = $('#' + target).height();
+        console.log('sw: ' + initW + ' sh: ' + initH);
 
-        this.app = new PIXI.Application(this.initW, this.initH, {
+        var app = new PIXI.Application({
             autoResize: true,
-            resolution: devicePixelRatio,
-            transparent: true
+            resolution: devicePixelRatio
         });
 
-        // this.app.renderer.autoResize = true;
-        // window.addEventListener('resize', () => this.resize());
+        app.renderer.autoResize = true;
+        window.addEventListener('resize', resize);
 
-        $('#neon').append(this.app.view);
-        // $('#' + target).append(app.view);
-        this.parent = this.app.view.parentNode;
+        $('#' + target).append(app.view);
 
-        // BG
-        this.bg = PIXI.Sprite.fromImage('assets/images/showdown/showdown-off.png');
+        // WoF
+        var bg = PIXI.Sprite.fromImage('assets/images/showdown/showdown-off.png');
         // var button = PIXI.Sprite.fromImage('assets/images/wheel/btn-spin.png');
         // var marker = PIXI.Sprite.fromImage('assets/images/wheel/marker.png');
-        this.bg.anchor.set(0.5);
-        this.bg.ratio = this.bg.width / this.bg.height;
-        console.log('bg.ratio: ' + this.bg.ratio);
+        bg.anchor.set(0.5);
+        bg.ratio = bg.width / bg.height;
+        // console.log(' wr: ' + bg.ratio);
 
         // button.anchor.set(0.5);
-        // button.x = this.app.screen.width / 2;
-        // button.y = this.bg.position.y + bg.height / 1.65;
+        // button.x = app.screen.width / 2;
+        // button.y = bg.position.y + bg.height / 1.65;
         // button.interactive = true;
         // button.buttonMode = true;
         // button.on('pointerdown', onButtonClick);
 
         // marker.anchor.set(0.5);
-        // marker.x = this.app.screen.width / 2;
+        // marker.x = app.screen.width / 2;
         // marker.y = bg.position.y - bg.height / 1.65;
 
-        // if (this.initW != 0 && this.initW < this.initH) {
-        //     this.bg.width = 0.4 * (this.initW / this.bg.ratio);
-        //     this.bg.height = 0.4 * (this.initW * this.bg.ratio);
-        //     // console.log('sw: ' + initW + ' sh: ' + initH);
-        //     // console.log('w: ' + bg.width + ' h: ' + bg.height);
-        // } else {
-        //     this.bg.width = 0.4 * this.initH * this.bg.ratio;
-        //     this.bg.height = 0.4 * this.initH / this.bg.ratio;
-        //     // console.log('sw: ' + initW + ' sh: ' + initH);
-        //     // console.log('w: ' + this.bg.width + ' h: ' + this.bg.height);
-        // }
+        if (initW != 0 && initW < initH) {
+            bg.width = 0.4 * (initW / bg.ratio);
+            bg.height = 0.4 * (initW * bg.ratio);
+            // console.log('sw: ' + initW + ' sh: ' + initH);
+            // console.log('w: ' + bg.width + ' h: ' + bg.height);
+        } else {
+            bg.width = 0.4 * initH * bg.ratio;
+            bg.height = 0.4 * initH / bg.ratio;
+            // console.log('sw: ' + initW + ' sh: ' + initH);
+            // console.log('w: ' + bg.width + ' h: ' + bg.height);
+        }
 
         // move the sprite to the center of the screen
-        this.bg.x = this.app.screen.width / 2;
-        this.bg.y = this.app.screen.height / 2;
+        bg.x = app.screen.width / 2;
+        bg.y = app.screen.height / 2;
 
-        this._l = () => this.resize();
-        window.addEventListener('load', this._l);
-        window.addEventListener('resize', this._l);
 
-        this.app.stage.addChild(this.bg);
-    }
+        window.addEventListener("load", resize);
 
-    destroy() {
-        window.removeEventListener('load', this._l);
-        window.removeEventListener('resize', this._l);
-    
-        this.app.destroy({children:true, texture:true, baseTexture:true})
-    
-        console.warn('Listeneres removed!');
+        app.stage.addChild(bg);
     }
 
     resize() {
 
+        const parent = app.view.parentNode;
         const calculatedWidth = (window.innerWidth >= 1024) ? (window.innerHeight * 0.5) : (window.innerHeight * 0.8);
         const wheelSize = Math.min(parent.clientWidth, calculatedWidth);
         const ratio = wheelSize / 750;
 
-        this.bg.scale.x = this.bg.scale.y = ratio;
-        this.app.renderer.resize(wheelSize, wheelSize + 200);
-        this.bg.position.set(this.app.screen.width / 2, this.app.screen.height / 2);
+        bg.scale.x = bg.scale.y = ratio;
+        app.renderer.resize(wheelSize, wheelSize + 200);
+        bg.position.set(app.screen.width / 2, app.screen.height / 2);
 
         //   button.position.set(app.screen.width / 2, bg.position.y + bg.height / 1.65);
         //   button.scale.x = button.scale.y = ratio * 1.5;
@@ -122,12 +110,12 @@ export default class neon {
         const rotate = () => {
             if (bg.rotation >= point) {
                 bg.rotation = point;
-                this.app.ticker.remove(rotate);
+                app.ticker.remove(rotate);
             } else {
                 bg.rotation += easeInOutSpin(point, bg.rotation);
             }
         };
-        this.app.ticker.add(rotate);
+        app.ticker.add(rotate);
     }
 
 }

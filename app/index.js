@@ -17,9 +17,9 @@ import 'styles/index.scss';
 
 import * as PIXI from 'pixi.js';
 
-// JS classes
-import  * as wheel from 'js/wheel.js'
-import 'js/neon.js'
+
 
 // JS task
-import 'js/main.js'
+import 'js/main.js';
+
+
