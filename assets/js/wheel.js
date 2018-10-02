@@ -40,21 +40,21 @@ export default class wheel {
       this.wheel.height = 0.7 * this.initH / this.wheel.ratio;
       // console.log('sw: ' + this.initW + ' sh: ' + this.initH);
       // console.log('w: ' + this.wheel.width + ' h: ' + this.wheel.height);
-    }    
+    }
 
     // console.log(' wr: ' + this.wheel.this.ratio);
     this.app.stage.addChild(this.wheel);
-    console.log('stage wheel injection at Y: '+ this.wheel.y);
+    console.log('stage wheel injection at Y: ' + this.wheel.y);
 
     this.button = PIXI.Sprite.fromImage('assets/images/wheel/btn-spin.png');
     this.button.anchor.set(0.5);
     this.button.x = this.app.screen.width / 2;
     this.button.y = this.wheel.position.y + this.wheel.height / 1.65;
 
-    console.log('wheel Y: '+ this.wheel.position.y)
-    console.log('wheel height: '+ this.wheel.height)
+    console.log('wheel Y: ' + this.wheel.position.y)
+    console.log('wheel height: ' + this.wheel.height)
 
-    console.log('btn Y: '+ this.button.y)
+    console.log('btn Y: ' + this.button.y)
     this.button.interactive = true;
     this.button.buttonMode = true;
     this.button.on('pointerdown', () => this.onButtonClick());
@@ -63,7 +63,7 @@ export default class wheel {
     this.marker.anchor.set(0.5);
     this.marker.x = this.app.screen.width / 2;
     this.marker.y = this.wheel.position.y - this.wheel.height / 1.65;
-    console.log('mrk Y: '+ this.marker.y)    
+    console.log('mrk Y: ' + this.marker.y)
 
 
 
@@ -74,7 +74,7 @@ export default class wheel {
     // $(window).on('resize', this.resize());
 
     this._l = () => this.resize();
-    
+
 
     window.addEventListener('load', this._l);
     window.addEventListener('resize', this._l);
@@ -82,7 +82,7 @@ export default class wheel {
     // window.addEventListener('load', () => this.resize(), true);
     // window.addEventListener('resize', () => this.resize(), true);
 
-    if(resize) {
+    if (resize) {
       this.resize();
       console.log('forceResize');
     }
@@ -90,7 +90,7 @@ export default class wheel {
     console.log('window resize && load eventListeners');
 
     this.app.stage.addChild(this.button);
-    console.log('stage btn injection at Y: '+ this.button.y);
+    console.log('stage btn injection at Y: ' + this.button.y);
 
     this.app.stage.addChild(this.marker);
 
@@ -100,7 +100,11 @@ export default class wheel {
     window.removeEventListener('load', this._l);
     window.removeEventListener('resize', this._l);
 
-    this.app.destroy({children:true, texture:true, baseTexture:true})
+    this.app.destroy({
+      children: true,
+      texture: true,
+      baseTexture: true
+    })
 
     console.warn('Listeneres removed!');
   }
@@ -113,9 +117,9 @@ export default class wheel {
     var wheelSize = Math.min(this.parent.clientWidth, calculatedWidth);
 
     // var wheelSize = this.parent.clientWidth;
-
-    console.log('wheelSize: ' + wheelSize);
-    console.log('clientWidth: ' + this.parent.clientWidth);
+    //
+    // console.log('wheelSize: ' + wheelSize);
+    // console.log('clientWidth: ' + this.parent.clientWidth);
 
     var ratio = wheelSize / 750;
 
@@ -130,8 +134,8 @@ export default class wheel {
     this.marker.position.set(this.app.screen.width / 2, (this.wheel.position.y - this.wheel.height / 1.65));
     this.marker.scale.x = this.marker.scale.y = ratio * 1.5;
 
-    console.log('resized! : ' + ratio);
-    console.log('w: ' + this.wheel.width + ' h: ' + this.wheel.height);
+    // console.log('resized! : ' + ratio);
+    // console.log('w: ' + this.wheel.width + ' h: ' + this.wheel.height);
   }
 
   getDegrees(number, fields, lapsNumber) {
@@ -151,7 +155,7 @@ export default class wheel {
 
   getStopPoint() {
     var position = Math.floor(Math.random() * 5); // TODO API call
-    var range = this.getRange(position, 4);  // from API
+    var range = this.getRange(position, 4); // from API
     console.log(range);
     var stopPoint = Math.random() * (range.maxValue - range.minValue) + range.minValue;
     console.log('stopP: ' + stopPoint)
