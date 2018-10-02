@@ -1,35 +1,47 @@
 // Apply a natural box layout model to all elements
 // but allowing components to change
 // http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+
 html {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-*, *:before, *:after {
-    -webkit-box-sizing: inherit;
-            box-sizing: inherit;
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 #wheel {
-    text-align: center;
-    width:100%;
-    // padding-top: 100%;
-    min-height: 450px;
-
-    // width: 100%;
-    // min-height: 1vw;
+  text-align: center;
+  width: 100%;
+  // padding-top: 100%;
+  min-height: 450px;
+  // width: 100%;
+  // min-height: 1vw;
 }
+
 #neon {
-    width:100%;
-    background-image: url('/assets/images/showdown/header.png');
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+  width: 100%;
+  background-image: url("/assets/images/showdown/header.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.header-wrapper{
+  overflow:hidden;
+  width:100%;
 }
 
 .header {
-  margin : 0;
+  margin: 0;
   padding: 0;
   width: 100%;
+  min-width: 240px;
   height: calc(100vh / 5);
   min-height: 100px;
+  overflow-x: hidden;
 }
